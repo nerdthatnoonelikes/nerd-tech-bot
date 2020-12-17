@@ -22,7 +22,7 @@ export default class BotClient extends AkairoClient {
     public logger: Logger = Logger.get(BotClient);
     public config: BotOptions;
     public listenerHandler: ListenerHandler = new ListenerHandler(this, {
-        directory: join(__dirname, "..", "core" ,"listeners")
+        directory: join(__dirname, "..", "core", "listeners")
     });
 
 
@@ -36,8 +36,8 @@ export default class BotClient extends AkairoClient {
         defaultCooldown: 0,
         argumentDefaults: {
             prompt: {
-                modifyStart: (_: Message, str: string): string =>`${str}\n\nType \`cancel\` to cancel the command...`,
-                modifyRetry: (_: Message, str: string): string =>`${str}\n\nType \`cancel\` to cancel the command...`,
+                modifyStart: (_: Message, str: string): string => `${str}\n\nType \`cancel\` to cancel the command...`,
+                modifyRetry: (_: Message, str: string): string => `${str}\n\nType \`cancel\` to cancel the command...`,
                 timeout: "You took too long, the command has been cancelled.",
                 ended: "You exceeded the maximum amount of tries, the command has been cancelled.",
                 cancel: "This command has been cancelled.",
@@ -69,7 +69,8 @@ export default class BotClient extends AkairoClient {
         this.listenerHandler.loadAll();
     }
 
-public async start(): Promise<string> {
-    await this._init();
-    return this.login(this.config.token);}
+    public async start(): Promise<string> {
+        await this._init();
+        return this.login(this.config.token);
+    }
 }

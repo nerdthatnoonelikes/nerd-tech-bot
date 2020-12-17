@@ -2,12 +2,12 @@ import { Command } from "discord-akairo";
 import { MessageEmbed } from "discord.js";
 import { Message, GuildMember } from "discord.js";
 
-export default class MuteCommand extends Command {
+export default class UnmuteCommand extends Command {
     public constructor() {
-        super("mute", {
-            aliases: ["mute"],
+        super("unmute", {
+            aliases: ["unmute"],
             description: {
-                content: "mute a user"
+                content: "unmute a user"
             },
             category: "Moderation",
             ratelimit: 3,
@@ -36,34 +36,20 @@ export default class MuteCommand extends Command {
 
             let role = message.guild.roles.cache.find((x) => x.name === "Muted");
 
-            if (!role) {
-                role = await message.guild.roles.create({
-                    data: {
-                        name: "Muted",
-                        color: "#505050",
-                    },
-                    reason: "Role needed for Mute System"
-                })
-            }
+            if (!role) return message.channel.send('That user has not been muted in this server.')
 
-            channels.forEach(channel => {
-                channel.updateOverwrite(role, {
-                    SEND_MESSAGES: false,
-                })
-            })
+            let UnmuteEmbed = new MessageEmbed()
+            UnmuteEmbed.setThumbnail(member.user.displayAvatarURL())
+            UnmuteEmbed.setTitle('User Was Unmuted!')
+            UnmuteEmbed.addField('Who Was Unmuted', member.user.tag)
+            UnmuteEmbed.addField('Unmuted By', message.author.tag)
+            UnmuteEmbed.addField('Reason', reason)
+            UnmuteEmbed.setColor("BLUE")
+            UnmuteEmbed.setTimestamp()
 
-            let MuteEmbed = new MessageEmbed()
-            MuteEmbed.setThumbnail(member.user.displayAvatarURL())
-            MuteEmbed.setTitle('User Was Muted!')
-            MuteEmbed.addField('Who Was Muted', member.user.tag)
-            MuteEmbed.addField('Muted By', message.author.tag)
-            MuteEmbed.addField('Reason', reason)
-            MuteEmbed.setColor("BLUE")
-            MuteEmbed.setTimestamp()
+            message.channel.send(UnmuteEmbed)
 
-            message.channel.send(MuteEmbed)
-
-            member.roles.add(role)
+            member.roles.remove(role)
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
