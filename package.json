@@ -1,0 +1,29 @@
+{
+  "name": "nerd-tech-bot",
+  "version": "1.0.0",
+  "description": "the discord bot for the nerd tech discord server!",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/src/Bot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerdthatnoonelikes/nerd-tech-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nerdthatnoonelikes/nerd-tech-bot/issues"
+  },
+  "homepage": "https://github.com/nerdthatnoonelikes/nerd-tech-bot#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.14"
+  },
+  "dependencies": {
+    "@ayana/logger": "^2.1.1",
+    "common-tags": "^1.8.0",
+    "discord-akairo": "^8.1.0",
+    "discord.js": "^12.5.1"
+  }
+}
