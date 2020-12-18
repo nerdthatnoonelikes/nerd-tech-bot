@@ -46,9 +46,9 @@ export default class MuteCommand extends Command {
               .setColor("BLUE")
               .setTimestamp()
 
-        message.channel.send(UnmuteEmbed)
+            message.channel.send(UnmuteEmbed)
 
-            user.roles.remove(role);
+            member.roles.remove(role);
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
