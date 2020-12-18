@@ -1,7 +1,7 @@
 import { Command } from "discord-akairo";
 import { Message, GuildMember, MessageEmbed } from "discord.js";
 
-export default class MuteCommand extends Command {
+export default class UnmuteCommand extends Command {
     public constructor() {
         super("unmute", {
             aliases: ["unmute"],
@@ -15,8 +15,8 @@ export default class MuteCommand extends Command {
                     id: "member",
                     type: "member",
                     prompt: {
-                        start: (msg: Message) => `${msg.author} please provide a user to mute`,
-                        retry: (msg: Message) => `${msg.author} please provide a valud user to mute`
+                        start: (msg: Message) => `${msg.author} please provide a user to unmute`,
+                        retry: (msg: Message) => `${msg.author} please provide a valid user to unmute`
                     }
                 },
                 {
@@ -38,9 +38,9 @@ export default class MuteCommand extends Command {
             if (!role) return message.channel.send("That user has not been muted.")
 
             let UnmuteEmbed = new MessageEmbed()
-              .setThumbnail(user.user.displayAvatarURL())
+              .setThumbnail(member.user.displayAvatarURL())
               .setTitle('User Was Unmuted!')
-              .addField('Who Was Unmuted', user.user.tag)
+              .addField('Who Was Unmuted', member.user.tag)
               .addField('Unmuted By', message.author.tag)
               .addField('Reason', reason)
               .setColor("BLUE")
@@ -48,7 +48,7 @@ export default class MuteCommand extends Command {
 
             message.util.send(UnmuteEmbed)
 
-            member.roles.remove(role);
+            member.roles.remove(role)
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
