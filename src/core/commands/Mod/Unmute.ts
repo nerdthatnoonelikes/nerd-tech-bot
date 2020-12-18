@@ -1,12 +1,12 @@
 import { Command } from "discord-akairo";
 import { Message, GuildMember, MessageEmbed } from "discord.js";
 
-export default class MuteCommand extends Command {
+export default class UnmuteCommand extends Command {
     public constructor() {
-        super("mute", {
-            aliases: ["mute"],
+        super("unmute", {
+            aliases: ["unmute"],
             description: {
-                content: "mute a user"
+                content: "unmute a user"
             },
             category: "Moderation",
             ratelimit: 3,
@@ -15,8 +15,8 @@ export default class MuteCommand extends Command {
                     id: "member",
                     type: "member",
                     prompt: {
-                        start: (msg: Message) => `${msg.author} please provide a user to mute`,
-                        retry: (msg: Message) => `${msg.author} please provide a valud user to mute`
+                        start: (msg: Message) => `${msg.author} please provide a user to unmute`,
+                        retry: (msg: Message) => `${msg.author} please provide a valid user to unmute`
                     }
                 },
                 {
@@ -30,9 +30,9 @@ export default class MuteCommand extends Command {
     }
 
     public async exec(message: Message, {member, reason}: {member: GuildMember, reason: string}) {
-        try 
-            member.roles.add("789166221018529843");
-            message.util.send(`${member.user.username} was muted by **${message.author.username}** for **${reason}**`);
+        try {
+            member.roles.remove("789166221018529843");
+            message.util.send(`${member.user.username} was unmuted by **${message.author.username}** for **${reason}**`);
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
