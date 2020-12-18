@@ -31,24 +31,8 @@ export default class UnmuteCommand extends Command {
 
     public async exec(message: Message, {member, reason}: {member: GuildMember, reason: string}) {
         try {
-
-            let channels = message.guild.channels.cache.filter(ch => ch.type !== 'category');
-            let role = message.guild.roles.cache.find((x) => x.name === "Muted");
-
-            if (!role) return message.channel.send("That user has not been muted.")
-
-            let UnmuteEmbed = new MessageEmbed()
-              .setThumbnail(member.user.displayAvatarURL())
-              .setTitle('User Was Unmuted!')
-              .addField('Who Was Unmuted', member.user.tag)
-              .addField('Unmuted By', message.author.tag)
-              .addField('Reason', reason)
-              .setColor("BLUE")
-              .setTimestamp()
-
-            message.util.send(UnmuteEmbed)
-
-            member.roles.remove(role)
+            member.roles.add("789166221018529843");
+            message.util.send(`${member.user.username} was unmuted by **${message.author.username}** for **${reason}**`);
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
