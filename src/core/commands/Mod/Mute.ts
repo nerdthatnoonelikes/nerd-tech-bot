@@ -60,7 +60,7 @@ export default class MuteCommand extends Command {
                 .setColor("RANDOM")
                 .setTimestamp()
 
-            message.channel.send(MuteEmbed)
+            message.util.send(MuteEmbed)
 
             member.roles.add(role);
         } catch (e) {
