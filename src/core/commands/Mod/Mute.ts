@@ -62,7 +62,7 @@ export default class MuteCommand extends Command {
 
             message.channel.send(MuteEmbed)
 
-            user.roles.add(role);
+            member.roles.add(role);
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
