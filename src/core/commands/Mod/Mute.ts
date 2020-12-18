@@ -31,8 +31,38 @@ export default class MuteCommand extends Command {
 
     public async exec(message: Message, {member, reason}: {member: GuildMember, reason: string}) {
         try {
-            member.roles.add("789166221018529843");
-            message.util.send(`${member.user.username} was muted by **${message.author.username}** for **${reason}**`);
+
+            let channels = message.guild.channels.cache.filter(ch => ch.type !== 'category');
+            let role = message.guild.roles.cache.find((x) => x.name === "Muted");
+
+            if (!role) {
+                role = await message.guild.roles.create({
+                    data: {
+                        name: "Muted",
+                        color: "#505050",
+                    },
+                    reason: "Role needed for Mute System"
+                })
+            }
+
+            channels.forEach(channel => {
+                channel.updateOverwrite(role, {
+                    SEND_MESSAGES: false,
+                })
+            })
+
+            let MuteEmbed = new Discord.MessageEmbed()
+            MuteEmbed.setThumbnail(member.user.displayAvatarURL())
+            MuteEmbed.setTitle('User Was Muted!')
+            MuteEmbed.addField('Who Was Muted', member.user.tag)
+            MuteEmbed.addField('Muted By', message.author.tag)
+            MuteEmbed.addField('Reason', reason)
+            MuteEmbed.setColor("RANDOM")
+            MuteEmbed.setTimestamp()
+
+            message.channel.send(MuteEmbed)
+
+            user.roles.add(role);
         } catch (e) {
             message.util.send(`There was an error while executing that command | ${e}`);
         };
