@@ -1,5 +1,5 @@
 import { Command } from "discord-akairo";
-import { Message, GuildMember } from "discord.js";
+import { Message, GuildMember, MessageEmbed } from "discord.js";
 
 export default class MuteCommand extends Command {
     public constructor() {
@@ -51,14 +51,14 @@ export default class MuteCommand extends Command {
                 })
             })
 
-            let MuteEmbed = new Discord.MessageEmbed()
-            MuteEmbed.setThumbnail(member.user.displayAvatarURL())
-            MuteEmbed.setTitle('User Was Muted!')
-            MuteEmbed.addField('Who Was Muted', member.user.tag)
-            MuteEmbed.addField('Muted By', message.author.tag)
-            MuteEmbed.addField('Reason', reason)
-            MuteEmbed.setColor("RANDOM")
-            MuteEmbed.setTimestamp()
+            let MuteEmbed = new MessageEmbed()
+                .setThumbnail(member.user.displayAvatarURL())
+                .setTitle('User Was Muted!')
+                .addField('Who Was Muted', member.user.tag)
+                .addField('Muted By', message.author.tag)
+                .addField('Reason', reason)
+                .setColor("RANDOM")
+                .setTimestamp()
 
             message.channel.send(MuteEmbed)
 
