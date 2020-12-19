@@ -5,11 +5,15 @@ import Logger from "@ayana/logger";
 
 import { token, owners, prefix } from "../../Config";
 
+
+import { Database } from "quickmongo";
+
 declare module "discord-akairo" {
     interface AkairoClient {
         commandHandler: CommandHandler;
         listenerHandler: ListenerHandler;
         logger: Logger;
+        db: Database;
     }
 }
 
@@ -19,12 +23,12 @@ interface BotOptions {
 }
 
 export default class BotClient extends AkairoClient {
+    public db: Database;
     public logger: Logger = Logger.get(BotClient);
     public config: BotOptions;
     public listenerHandler: ListenerHandler = new ListenerHandler(this, {
         directory: join(__dirname, "..", "core" ,"listeners")
     });
-
 
     public commandHandler: CommandHandler = new CommandHandler(this, {
         directory: join(__dirname, "..", "core", "commands"),
@@ -67,9 +71,17 @@ export default class BotClient extends AkairoClient {
 
         this.commandHandler.loadAll();
         this.listenerHandler.loadAll();
+
+        this.db = new Database("mongodb://10.0.0.162:27017");
+
+        this.db.on("ready", () => {
+            this.logger.info("Connected to db");
+        })
+
     }
 
 public async start(): Promise<string> {
     await this._init();
-    return this.login(this.config.token);}
+    return this.login(this.config.token);
+    }
 }
